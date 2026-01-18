@@ -1,0 +1,74 @@
+services:
+  ayoya-ecom-backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ayoya-ecom-backend
+    ports:
+      - "8001:8001"
+    environment:
+      - ADMIN_PASSWORD=ayoya_admin_2024
+    volumes:
+      - ./orders:/app/orders
+      - ./config:/app/config
+      - ./uploads:/app/uploads
+    networks:
+      - n8n_default
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.ayoya-ecom-api.rule=Host(`ecom.ayoya.srv1164291.hstgr.cloud`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.ayoya-ecom-api.entrypoints=websecure"
+      - "traefik.http.routers.ayoya-ecom-api.tls.certresolver=mytlschallenge"
+      - "traefik.http.services.ayoya-ecom-api.loadbalancer.server.port=8001"
+      - "traefik.docker.network=n8n_default"
+    restart: unless-stopped
+
+  ayoya-ecom-frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - VITE_API_URL=https://ecom.ayoya.srv1164291.hstgr.cloud/api
+    container_name: ayoya-ecom-frontend
+    depends_on:
+      - ayoya-ecom-backend
+    networks:
+      - n8n_default
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.ayoya-ecom.rule=Host(`ecom.ayoya.srv1164291.hstgr.cloud`)"
+      - "traefik.http.routers.ayoya-ecom.entrypoints=websecure"
+      - "traefik.http.routers.ayoya-ecom.tls.certresolver=mytlschallenge"
+      - "traefik.http.services.ayoya-ecom.loadbalancer.server.port=80"
+      - "traefik.http.routers.ayoya-ecom.priority=1"
+      - "traefik.docker.network=n8n_default"
+    restart: unless-stopped
+
+  ayoya-ecom-docs:
+    build:
+      context: ./docs
+      dockerfile: Dockerfile
+    container_name: ayoya-ecom-docs
+    networks:
+      - n8n_default
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.ayoya-ecom-docs.loadbalancer.server.port=80"
+      - "traefik.docker.network=n8n_default"
+      # Doc Admin
+      - "traefik.http.routers.ayoya-doc-admin.rule=Host(`docadmin.ecom.ayoya.srv1164291.hstgr.cloud`)"
+      - "traefik.http.routers.ayoya-doc-admin.entrypoints=websecure"
+      - "traefik.http.routers.ayoya-doc-admin.tls.certresolver=mytlschallenge"
+      - "traefik.http.routers.ayoya-doc-admin.middlewares=doc-admin-rewrite"
+      - "traefik.http.middlewares.doc-admin-rewrite.addprefix.prefix=/admin"
+      # Doc Logistique
+      - "traefik.http.routers.ayoya-doc-logistics.rule=Host(`doclogistique.ecom.ayoya.srv1164291.hstgr.cloud`)"
+      - "traefik.http.routers.ayoya-doc-logistics.entrypoints=websecure"
+      - "traefik.http.routers.ayoya-doc-logistics.tls.certresolver=mytlschallenge"
+      - "traefik.http.routers.ayoya-doc-logistics.middlewares=doc-logistics-rewrite"
+      - "traefik.http.middlewares.doc-logistics-rewrite.addprefix.prefix=/logistics"
+    restart: unless-stopped
+
+networks:
+  n8n_default:
+    external: true

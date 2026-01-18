@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide Agent Logistique - AYOYA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background: linear-gradient(135deg, #00AA55 0%, #0066CC 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        nav {
+            background: white;
+            border-bottom: 2px solid #00AA55;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        nav li {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        nav a {
+            display: block;
+            padding: 15px 20px;
+            color: #1a1a1a;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #00AA55;
+            border-bottom-color: #00AA55;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        section {
+            background: white;
+            margin-bottom: 40px;
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        section.active {
+            display: block;
+        }
+
+        section h2 {
+            color: #00AA55;
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #00AA55;
+            padding-bottom: 10px;
+        }
+
+        section h3 {
+            color: #0066CC;
+            font-size: 1.4em;
+            margin: 30px 0 15px 0;
+        }
+
+        .step {
+            background: #f9f9f9;
+            border-left: 4px solid #00AA55;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .step strong {
+            color: white;
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: #00AA55;
+            text-align: center;
+            border-radius: 50%;
+            line-height: 30px;
+            margin-right: 10px;
+        }
+
+        .screenshot {
+            background: #e8e8e8;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            padding: 40px 20px;
+            text-align: center;
+            color: #666;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #0066CC;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #00AA55;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #FF9800;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .error-box {
+            background: #ffebee;
+            border-left: 4px solid #DC2626;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table th, table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        table th {
+            background: #00AA55;
+            color: white;
+            font-weight: 600;
+        }
+
+        table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-confirmed {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status-assigned {
+            background: #e2e3e5;
+            color: #383d41;
+        }
+
+        .status-in-delivery {
+            background: #cfe2ff;
+            color: #084298;
+        }
+
+        .status-delivered {
+            background: #d1e7dd;
+            color: #0f5132;
+        }
+
+        .status-cancelled {
+            background: #f8d7da;
+            color: #842029;
+        }
+
+        ul, ol {
+            margin: 15px 0 15px 30px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: #00AA55;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 10px 0;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: #008844;
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            background: #0066CC;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 10px 5px 10px 0;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: #0052a3;
+        }
+
+        code {
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #e0e0e0;
+            padding: 15px 0;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            font-weight: 600;
+            color: #00AA55;
+            cursor: pointer;
+            padding: 10px 0;
+            user-select: none;
+        }
+
+        .faq-question::before {
+            content: '▶ ';
+            color: #0066CC;
+        }
+
+        .faq-question.open::before {
+            content: '▼ ';
+        }
+
+        .faq-answer {
+            display: none;
+            padding: 10px 0 10px 20px;
+            color: #666;
+        }
+
+        .faq-answer.open {
+            display: block;
+        }
+
+        .workflow-diagram {
+            background: #f9f9f9;
+            border: 2px solid #00AA55;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .workflow-step {
+            display: inline-block;
+            background: white;
+            border: 2px solid #00AA55;
+            padding: 15px 20px;
+            margin: 10px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #00AA55;
+        }
+
+        .workflow-arrow {
+            display: inline-block;
+            color: #00AA55;
+            font-size: 1.5em;
+            margin: 0 5px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+
+            nav li {
+                min-width: auto;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            .workflow-step {
+                display: block;
+                margin: 10px 0;
+            }
+
+            .workflow-arrow {
+                display: block;
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Guide Agent Logistique AYOYA</h1>
+        <p>Gestion des commandes et des livraisons</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#" onclick="showSection('home', event)">Accueil</a></li>
+            <li><a href="#" onclick="showSection('login', event)">Connexion</a></li>
+            <li><a href="#" onclick="showSection('dashboard', event)">Tableau de bord</a></li>
+            <li><a href="#" onclick="showSection('orders', event)">Commandes</a></li>
+            <li><a href="#" onclick="showSection('process', event)">Traitement</a></li>
+            <li><a href="#" onclick="showSection('drivers', event)">Livreurs</a></li>
+            <li><a href="#" onclick="showSection('statuses', event)">Statuts</a></li>
+            <li><a href="#" onclick="showSection('faq', event)">FAQ</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <!-- ACCUEIL -->
+        <section id="home" class="active">
+            <h2>Bienvenue Agent Logistique AYOYA</h2>
+            <p>Vous êtes responsable de la gestion des commandes et des livraisons sur la plateforme AYOYA. Ce guide vous aide à maîtriser votre interface de travail et traiter efficacement les commandes.</p>
+
+            <h3>Vos missions principales</h3>
+            <ul>
+                <li>Consulter et traiter les nouvelles commandes</li>
+                <li>Assigner les livreurs aux commandes</li>
+                <li>Suivre l'état des livraisons en temps réel</li>
+                <li>Gérer les livreurs (ajout, modification, désactivation)</li>
+                <li>Résoudre les problèmes de livraison</li>
+                <li>Générer des rapports de performance</li>
+            </ul>
+
+            <div class="info-box">
+                💡 Astuce: Consultez ce guide régulièrement pour rester à jour avec les nouvelles fonctionnalités.
+            </div>
+        </section>
+
+        <!-- CONNEXION -->
+        <section id="login">
+            <h2>Connexion à l'interface logistique</h2>
+
+            <h3>Accès à l'interface</h3>
+            <table>
+                <tr>
+                    <th>Élément</th>
+                    <th>Valeur</th>
+                </tr>
+                <tr>
+                    <td><strong>URL</strong></td>
+                    <td><code>https://votre-domaine.com/logistics</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Identifiant</strong></td>
+                    <td><code>votre-identifiant</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Mot de passe</strong></td>
+                    <td>Votre mot de passe personnalisé</td>
+                </tr>
+            </table>
+
+            <h3>Étapes de connexion</h3>
+            <div class="step">
+                <strong>1</strong> Ouvrez votre navigateur et accédez à <code>https://votre-domaine.com/logistics</code>
+            </div>
+            <div class="screenshot">📱 Capture écran: Formulaire de connexion logistique</div>
+
+            <div class="step">
+                <strong>2</strong> Entrez votre identifiant dans le champ prévu
+            </div>
+
+            <div class="step">
+                <strong>3</strong> Entrez votre mot de passe
+            </div>
+
+            <div class="step">
+                <strong>4</strong> Cliquez sur "Se connecter"
+            </div>
+
+            <div class="success-box">
+                ✓ Vous êtes maintenant connecté au système logistique!
+            </div>
+
+            <h3>Récupération de mot de passe oublié</h3>
+            <div class="step">
+                <strong>1</strong> Sur la page de connexion, cliquez sur "Mot de passe oublié?"
+            </div>
+            <div class="step">
+                <strong>2</strong> Entrez votre email professionnel
+            </div>
+            <div class="step">
+                <strong>3</strong> Cliquez sur "Réinitialiser"
+            </div>
+            <div class="step">
+                <strong>4</strong> Consultez votre email pour le lien de réinitialisation
+            </div>
+            <div class="step">
+                <strong>5</strong> Créez un nouveau mot de passe et connectez-vous
+            </div>
+        </section>
+
+        <!-- TABLEAU DE BORD -->
+        <section id="dashboard">
+            <h2>Tableau de bord logistique</h2>
+            <p>Le tableau de bord vous offre une vue d'ensemble de votre charge de travail et des performances.</p>
+
+            <h3>Statistiques principales</h3>
+            <table>
+                <tr>
+                    <th>Indicateur</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><strong>Commandes à traiter</strong></td>
+                    <td>Nombre de commandes en attente de confirmation</td>
+                </tr>
+                <tr>
+                    <td><strong>Commandes en livraison</strong></td>
+                    <td>Nombre de colis actuellement en transport</td>
+                </tr>
+                <tr>
+                    <td><strong>Livraisons du jour</strong></td>
+                    <td>Nombre de colis livrés aujourd'hui</td>
+                </tr>
+                <tr>
+                    <td><strong>Taux de livraison</strong></td>
+                    <td>Pourcentage de livraisons réussies vs. annulées</td>
+                </tr>
+                <tr>
+                    <td><strong>Livreurs actifs</strong></td>
+                    <td>Nombre de livreurs disponibles actuellement</td>
+                </tr>
+                <tr>
+                    <td><strong>Problèmes signalés</strong></td>
+                    <td>Nombre de commandes avec anomalies</td>
+                </tr>
+            </table>
+
+            <h3>Raccourcis d'action rapide</h3>
+            <p>En bas du tableau de bord, trouvez des boutons d'action rapide:</p>
+            <ul>
+                <li><strong>Voir toutes les commandes</strong> - Accès rapide à la liste complète</li>
+                <li><strong>Assigner des commandes</strong> - Ouvrir le formulaire d'assignation</li>
+                <li><strong>Voir les livreurs</strong> - Gestion des livreurs</li>
+                <li><strong>Générer un rapport</strong> - Exporter les données du jour</li>
+            </ul>
+
+            <div class="screenshot">📊 Graphique: Vue du tableau de bord logistique</div>
+        </section>
+
+        <!-- GESTION DES COMMANDES -->
+        <section id="orders">
+            <h2>Gestion des commandes</h2>
+            <p>Consultez, filtrez et gérez l'ensemble des commandes passées sur la plateforme.</p>
+
+            <h3>Voir toutes les commandes</h3>
+            <div class="step">
+                <strong>1</strong> Cliquez sur "Commandes" dans le menu principal
+            </div>
+            <div class="screenshot">📱 Capture écran: Menu principal</div>
+
+            <div class="step">
+                <strong>2</strong> Une liste de toutes les commandes s'affiche
+            </div>
+            <div class="screenshot">📱 Capture écran: Liste des commandes</div>
+
+            <div class="step">
+                <strong>3</strong> Chaque ligne montre: Numéro de commande, Client, Date, Montant, Statut
+            </div>
+
+            <h3>Filtrer les commandes</h3>
+            <p>Utilisez les filtres pour affiner votre recherche:</p>
+
+            <h4>Filtrer par statut</h4>
+            <div class="step">
+                <strong>1</strong> Cliquez sur le filtre "Statut"
+            </div>
+            <div class="step">
+                <strong>2</strong> Sélectionnez un ou plusieurs statuts:
+                <ul>
+                    <li>En attente (Pending)</li>
+                    <li>Confirmée (Confirmed)</li>
+                    <li>Assignée (Assigned)</li>
+                    <li>En livraison (In Delivery)</li>
+                    <li>Livrée (Delivered)</li>
+                    <li>Annulée (Cancelled)</li>
+                </ul>
+            </div>
+            <div class="step">
+                <strong>3</strong> La liste se met à jour automatiquement
+            </div>
+
+            <h4>Filtrer par date</h4>
+            <div class="step">
+                <strong>1</strong> Cliquez sur le filtre "Date"
+            </div>
+            <div class="step">
+                <strong>2</strong> Sélectionnez une plage de dates:
+                <ul>
+                    <li>Aujourd'hui</li>
+                    <li>Dernière semaine</li>
+                    <li>Dernier mois</li>
+                    <li>Personnalisé</li>
+                </ul>
+            </div>
+            <div class="step">
+                <strong>3</strong> Validez votre sélection
+            </div>
+
+            <h4>Filtrer par zone de livraison</h4>
+            <div class="step">
+                <strong>1</strong> Cliquez sur le filtre "Zone"
+            </div>
+            <div class="step">
+                <strong>2</strong> Sélectionnez une ou plusieurs zones:
+                <ul>
+                    <li>Zone 1 (Centre-ville)</li>
+                    <li>Zone 2 (Périphérie)</li>
+                    <li>Zone 3 (Banlieue)</li>
+                    <li>Zone 4 (Région)</li>
+                </ul>
+            </div>
+
+            <h4>Rechercher une commande spécifique</h4>
+            <div class="step">
+                <strong>1</strong> Utilisez la barre de recherche en haut
+            </div>
+            <div class="step">
+                <strong>2</strong> Entrez:
+                <ul>
+                    <li>Le numéro de commande (ex: #12345)</li>
+                    <li>Le nom du client</li>
+                    <li>L'adresse de livraison</li>
+                </ul>
+            </div>
+            <div class="step">
+                <strong>3</strong> Appuyez sur Entrée ou cliquez sur "Rechercher"
+            </div>
+
+            <h3>Détail d'une commande</h3>
+            <div class="step">
+                <strong>1</strong> Cliquez sur une ligne de commande pour l'ouvrir
+            </div>
+            <div class="screenshot">📱 Capture écran: Détail commande</div>
+
+            <div class="step">
+                <strong>2</strong> Consultez toutes les informations:
+                <ul>
+                    <li>Numéro de commande</li>
+                    <li>Données client (nom, email, téléphone)</li>
+                    <li>Adresse de livraison</li>
+                    <li>Articles commandés (quantités, prix)</li>
+                    <li>Montant total TTC</li>
+                    <li>Mode de paiement</li>
+                    <li>Historique du statut</li>
+                    <li>Livreur assigné (s'il existe)</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                💡 Conseil: Cliquez sur le numéro de commande pour voir les détails complets ou sur le client pour voir son historique.
+            </div>
+        </section>
+
+        <!-- TRAITEMENT DES COMMANDES -->
+        <section id="process">
+            <h2>Traitement des commandes</h2>
+            <p>Suivez les étapes du traitement d'une commande de sa confirmation à sa livraison.</p>
+
+            <h3>Workflow de traitement</h3>
+            <div class="workflow-diagram">
+                <div class="workflow-step">Pending</div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">Confirmed</div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">Assigned</div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">In Delivery</div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">Delivered</div>
+            </div>
+
+            <h3>Étape 1: Confirmer une commande</h3>
+            <p>La première étape est de confirmer qu'une commande peut être traitée.</p>
+            <div class="step">
+                <strong>1</strong> Accédez à la liste des commandes filtrées par statut "Pending"
+            </div>
+            <div class="step">
+                <strong>2</strong> Ouvrez une commande à confirmer
+            </div>
+            <div class="step">
+                <strong>3</strong> Vérifiez tous les détails:
+                <ul>
+                    <li>Adresse de livraison complète et correcte</li>
+                    <li>Articles disponibles en stock</li>
+                    <li>Paiement reçu (si applicable)</li>
+                </ul>
+            </div>
+            <div class="screenshot">📱 Capture écran: Détail commande avant confirmation</div>
+
+            <div class="step">
+                <strong>4</strong> Cliquez sur le bouton "Confirmer la commande"
+            </div>
+            <div class="screenshot">📱 Capture écran: Bouton Confirmer</div>
+
+            <div class="step">
+                <strong>5</strong> Optionnel: Entrez des notes supplémentaires (ex: "Appeler avant livraison")
+            </div>
+
+            <div class="step">
+                <strong>6</strong> Cliquez sur "Valider la confirmation"
+            </div>
+
+            <div class="success-box">
+                ✓ La commande est maintenant confirmée! Le statut passe à "Confirmed"
+            </div>
+
+            <div class="warning-box">
+                ⚠️ Si une commande ne peut pas être confirmée (stock insuffisant, adresse invalide), cliquez sur "Annuler la commande" et ajoutez une raison.
+            </div>
+
+            <h3>Étape 2: Assigner un livreur</h3>
+            <p>Assignez une commande confirmée à un livreur disponible.</p>
+            <div class="step">
+                <strong>1</strong> Ouvrez une commande avec le statut "Confirmed"
+            </div>
+            <div class="step">
+                <strong>2</strong> Cliquez sur le bouton "Assigner un livreur"
+            </div>
+            <div class="screenshot">📱 Capture écran: Bouton Assigner livreur</div>
+
+            <div class="step">
+                <strong>3</strong> Une liste de livreurs disponibles s'affiche
+            </div>
+            <div class="screenshot">📱 Capture écran: Liste des livreurs</div>
+
+            <div class="step">
+                <strong>4</strong> Choisissez un livreur en fonction de:
+                <ul>
+                    <li>Zone de livraison (minimiser la distance)</li>
+                    <li>Capacité de charge disponible</li>
+                    <li>Emploi du temps (disponibilité)</li>
+                    <li>Historique de performance</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <strong>5</strong> Cliquez sur le livreur pour le sélectionner
+            </div>
+
+            <div class="step">
+                <strong>6</strong> Confirmez l'assignation
+            </div>
+
+            <div class="success-box">
+                ✓ Le livreur a reçu l'assignation! Le statut passe à "Assigned"
+            </div>
+
+            <h3>Étape 3: Mettre en livraison</h3>
+            <p>Mise à jour du statut quand le livreur prend la commande.</p>
+            <div class="step">
+                <strong>1</strong> Ouvrez une commande assignée à un livreur
+            </div>
+            <div class="step">
+                <strong>2</strong> Cliquez sur le bouton "Mettre en livraison"
+            </div>
+            <div class="step">
+                <strong>3</strong> Confirmez que le colis a été remis au livreur
+            </div>
+            <div class="step">
+                <strong>4</strong> Optionnel: Entrez l'heure de prise en charge
+            </div>
+            <div class="step">
+                <strong>5</strong> Cliquez sur "Confirmer"
+            </div>
+
+            <div class="success-box">
+                ✓ La commande est maintenant en livraison! Le statut passe à "In Delivery"
+            </div>
+
+            <div class="info-box">
+                💡 Le client reçoit une notification SMS/email avec le statut et les coordonnées du livreur.
+            </div>
+
+            <h3>Étape 4: Marquer comme livrée ou annulée</h3>
+            <p>Finaliser la commande une fois le colis livré ou en cas de problème.</p>
+
+            <h4>Marquer comme livrée</h4>
+            <div class="step">
+                <strong>1</strong> Ouvrez une commande en livraison
+            </div>
+            <div class="step">
+                <strong>2</strong> Cliquez sur le bouton "Marquer comme livrée"
+            </div>
+            <div class="step">
+                <strong>3</strong> Optionnel: Entrez la date/heure de livraison
+            </div>
+            <div class="step">
+                <strong>4</strong> Optionnel: Ajoutez une signature numérique ou preuve de livraison
+            </div>
+            <div class="step">
+                <strong>5</strong> Cliquez sur "Confirmer la livraison"
+            </div>
+
+            <div class="success-box">
+                ✓ La commande est livrée! Le statut passe à "Delivered"
+            </div>
+
+            <h4>Annuler une commande</h4>
+            <div class="step">
+                <strong>1</strong> Ouvrez la commande à annuler
+            </div>
+            <div class="step">
+                <strong>2</strong> Cliquez sur le bouton "Annuler la commande"
+            </div>
+            <div class="step">
+                <strong>3</strong> Sélectionnez la raison de l'annulation:
+                <ul>
+                    <li>Client demande</li>
+                    <li>Stock épuisé</li>
+                    <li>Adresse invalide</li>
+                    <li>Non payée</li>
+                    <li>Problème livraison</li>
+                    <li>Autre</li>
+                </ul>
+            </div>
+            <div class="step">
+                <strong>4</strong> Ajoutez une note explicative
+            </div>
+            <div class="step">
+                <strong>5</strong> Cliquez sur "Annuler"
+            </div>
+
+            <div class="error-box">
+                ⚠️ L'annulation est irréversible. Vérifiez bien avant de confirmer.
+            </div>
+        </section>
+
+        <!-- GESTION DES LIVREURS -->
+        <section id="drivers">
+            <h2>Gestion des livreurs</h2>
+            <p>Gérez votre équipe de livreurs: ajout, modification, suivi de performance.</p>
+
+            <h3>Vue d'ensemble des livreurs</h3>
+            <div class="step">
+                <strong>1</strong> Cliquez sur "Livreurs" dans le menu principal
+            </div>
+            <div class="screenshot">📱 Capture écran: Liste des livreurs</div>
+
+            <div class="step">
+                <strong>2</strong> Consultez la liste de tous vos livreurs avec:
+                <ul>
+                    <li>Nom complet</li>
+                    <li>Statut (Actif/Inactif)</li>
+                    <li>Zone assignée</li>
+                    <li>Nombre de livraisons du jour</li>
+                    <li>Taux de réussite</li>
+                </ul>
+            </div>
+
+            <h3>Ajouter un nouveau livreur</h3>
+            <div class="step">
+                <strong>1</strong> Cliquez sur le bouton "+ Ajouter un livreur"
+            </div>
+            <div class="screenshot">📱 Capture écran: Bouton ajouter livreur</div>
+
+            <div class="step">
+                <strong>2</strong> Remplissez le formulaire:
+                <ul>
+                    <li><strong>Prénom</strong> - Ex: Jean</li>
+                    <li><strong>Nom</strong> - Ex: Dupont</li>
+                    <li><strong>Téléphone</strong> - Ex: +33 6 XX XX XX XX</li>
+                    <li><strong>Email</strong> - Ex: jean.dupont@email.com</li>
+                    <li><strong>Zone assignée</strong> - Choisir Zone 1, 2, 3 ou 4</li>
+                    <li><strong>Type de transport</strong> - Vélo, Moto, Voiture, Camion</li>
+                    <li><strong>Plaque d'immatriculation</strong> - Si applicable</li>
+                </ul>
+            </div>
+            <div class="screenshot">📱 Capture écran: Formulaire nouveau livreur</div>
+
+            <div class="step">
+                <strong>3</strong> Cliquez sur "Créer le profil"
+            </div>
+
+            <div class="success-box">
+                ✓ Le livreur a été créé! Ses identifiants de connexion lui seront envoyés par email.
+            </div>
+
+            <h3>Modifier les informations d'un livreur</h3>
+            <div class="step">
+                <strong>1</strong> Cliquez sur un livreur dans la liste
+            </div>
+            <div class="step">
+                <strong>2</strong> Cliquez sur le bouton "Modifier"
+            </div>
+            <div class="screenshot">📱 Capture écran: Bouton modifier livreur</div>
+
+            <div class="step">
+                <strong>3</strong> Modifiez les informations nécessaires:
+                <ul>
+                    <li>Coordonnées de contact</li>
+                    <li>Zone assignée</li>
+                    <li>Type de transport</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <strong>4</strong> Cliquez sur "Sauvegarder les modifications"
+            </div>
+
+            <h3>Désactiver un livreur</h3>
+            <p>Pour mettre temporairement un livreur en pause (congés, maladie, etc.):</p>
+            <div class="step">
+                <strong>1</strong> Ouvrez le profil du livreur
+            </div>
+            <div class="step">
+                <strong>2</strong> Cliquez sur le bouton "Désactiver"
+            </div>
+            <div class="step">
+                <strong>3</strong> Sélectionnez la durée:
+                <ul>
+                    <li>1 jour</li>
+                    <li>1 semaine</li>
+                    <li>1 mois</li>
+                    <li>Indéfini</li>
+                </ul>
+            </div>
+            <div class="step">
+                <strong>4</strong> Optionnel: Entrez une raison
+            </div>
+            <div class="step">
+                <strong>5</strong> Confirmez
+            </div>
+
+            <div class="success-box">
+                ✓ Le livreur est maintenant inactif et ne recevra plus d'assignations.
+            </div>
+
+            <h3>Réactiver un livreur</h3>
+            <div class="step">
+                <strong>1</strong> Ouvrez le profil du livreur inactif
+            </div>
+            <div class="step">
+                <strong>2</strong> Cliquez sur le bouton "Réactiver"
+            </div>
+            <div class="step">
+                <strong>3</strong> Confirmez
+            </div>
+
+            <h3>Consulter les statistiques d'un livreur</h3>
+            <p>Suivez les performances de chaque livreur:</p>
+            <div class="step">
+                <strong>1</strong> Cliquez sur un livreur
+            </div>
+            <div class="step">
+                <strong>2</strong> Consultez l'onglet "Statistiques"
+            </div>
+            <div class="screenshot">📱 Capture écran: Statistiques livreur</div>
+
+            <div class="step">
+                <strong>3</strong> Données disponibles:
+                <ul>
+                    <li>Nombre total de livraisons</li>
+                    <li>Taux de réussite (%)</li>
+                    <li>Temps moyen de livraison</li>
+                    <li>Évaluations clients (note sur 5)</li>
+                    <li>Historique des livraisons (dernières 30 jours)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- STATUTS EXPLIQUÉS -->
+        <section id="statuses">
+            <h2>Explication des statuts</h2>
+            <p>Comprendre les différents statuts d'une commande et leur signification.</p>
+
+            <h3>Cycle de vie d'une commande</h3>
+            <table>
+                <tr>
+                    <th>Statut</th>
+                    <th>Code</th>
+                    <th>Description</th>
+                    <th>Actions possibles</th>
+                </tr>
+                <tr>
+                    <td><span class="status-badge status-pending">Pending</span></td>
+                    <td><code>pending</code></td>
+                    <td>Nouvelle commande reçue, en attente de confirmation par l'équipe logistique</td>
+                    <td>Confirmer ou Annuler</td>
+                </tr>
+                <tr>
+                    <td><span class="status-badge status-confirmed">Confirmed</span></td>
+                    <td><code>confirmed</code></td>
+                    <td>Commande validée et prête pour la livraison. Stock réservé, paiement reçu</td>
+                    <td>Assigner un livreur ou Annuler</td>
+                </tr>
+                <tr>
+                    <td><span class="status-badge status-assigned">Assigned</span></td>
+                    <td><code>assigned</code></td>
+                    <td>Un livreur a été assigné à cette commande</td>
+                    <td>Mettre en livraison ou Changer de livreur</td>
+                </tr>
+                <tr>
+                    <td><span class="status-badge status-in-delivery">In Delivery</span></td>
+                    <td><code>in_delivery</code></td>
+                    <td>Le colis est actuellement en transit. Le livreur peut la localiser en GPS</td>
+                    <td>Marquer comme livrée ou Rapporter un problème</td>
+                </tr>
+                <tr>
+                    <td><span class="status-badge status-delivered">Delivered</span></td>
+                    <td><code>delivered</code></td>
+                    <td>Commande livrée avec succès au client</td>
+                    <td>Aucune (commande terminée)</td>
+                </tr>
+                <tr>
+                    <td><span class="status-badge status-cancelled">Cancelled</span></td>
+                    <td><code>cancelled</code></td>
+                    <td>Commande annulée. Elle peut être annulée par le client ou l'équipe logistique</td>
+                    <td>Consulter la raison d'annulation</td>
+                </tr>
+            </table>
+
+            <h3>Raisons d'annulation possibles</h3>
+            <ul>
+                <li><strong>Client demande</strong> - Le client a demandé l'annulation</li>
+                <li><strong>Stock épuisé</strong> - L'article n'est plus disponible</li>
+                <li><strong>Adresse invalide</strong> - L'adresse de livraison est incomplète ou introuvable</li>
+                <li><strong>Paiement non reçu</strong> - La commande n'a pas été payée</li>
+                <li><strong>Problème livraison</strong> - Le livreur n'a pas pu effectuer la livraison</li>
+                <li><strong>Livraison refusée</strong> - Le client a refusé le colis</li>
+                <li><strong>Adresse retournée</strong> - Le colis a été renvoyé à l'expéditeur</li>
+            </ul>
+
+            <h3>Transitions de statut valides</h3>
+            <p>Une commande doit suivre cet ordre de progression:</p>
+            <pre>pending → confirmed → assigned → in_delivery → delivered
+ou à tout moment
+    ↓
+  cancelled</pre>
+
+            <div class="warning-box">
+                ⚠️ Note: Vous ne pouvez pas revenir à un statut antérieur. Une commande ne peut pas passer directement de "pending" à "in_delivery" (elle doit d'abord être "confirmed" puis "assigned").
+            </div>
+
+            <h3>Cas particuliers</h3>
+            <h4>Commande ne pouvant pas être livrée</h4>
+            <p>Si une commande ne peut pas être livrée malgré plusieurs tentatives:</p>
+            <ol>
+                <li>Essayez de contacter le client</li>
+                <li>Si impossible de livrer, annulez la commande avec la raison "Adresse retournée"</li>
+                <li>Documentez la situation</li>
+                <li>Remboursez le client si applicable</li>
+            </ol>
+
+            <h4>Problème découvert à la livraison</h4>
+            <p>Si un problème est découvert lors de la livraison (article cassé, manquant, etc.):</p>
+            <ol>
+                <li>Le livreur refuse l'article et l'ajoute à la liste de renvoi</li>
+                <li>Marquez la commande comme "Problème lors de la livraison"</li>
+                <li>Créez une demande de retour</li>
+                <li>Contactez le client pour arrangement</li>
+            </ol>
+        </section>
+
+        <!-- FAQ -->
+        <section id="faq">
+            <h2>Questions Fréquemment Posées (FAQ)</h2>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">Comment accepter l'assignation d'une commande?</div>
+                <div class="faq-answer">
+                    Si vous êtes livreur, vous recevrez les assignations sur votre téléphone via l'application mobile AYOYA. Vous pouvez accepter ou refuser chaque livraison. Une fois acceptée, la commande passe au statut "Assigned" et vous recevez les instructions de livraison.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">Quel est le délai pour confirmer une commande?</div>
+                <div class="faq-answer">
+                    Les commandes devraient être confirmées dès que possible, idéalement dans les 2 heures suivant leur réception. Si une commande ne peut pas être confirmée (stock manquant, adresse invalide), elle doit être annulée et le client notifié dans les 24 heures.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">Je ne peux pas assigner un livreur à une commande. Pourquoi?</div>
+                <div class="faq-answer">
+                    Cela peut être dû à: 1) Aucun livreur disponible dans la zone, 2) Tous les livreurs sont à capacité maximale, 3) Les livreurs ne couvrent pas cette zone. Vous pouvez étendre la zone de recherche, attendre qu'un livreur se libère, ou contacter l'administrateur pour ajouter un livreur.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">Comment modifier l'assignation d'un livreur?</div>
+                <div class="faq-answer">
+                    Pour changer le livreur assigné: 1) Ouvrez la commande, 2) Cliquez sur "Changer de livreur", 3) Sélectionnez un nouveau livreur, 4) Confirmez. L'ancien livreur sera notifié qu'une commande a été retirée, et le nouveau recevra l'assignation.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">Que faire si un client refuse la livraison?</div>
+                <div class="faq-answer">
+                    1) Le livreur refuse le colis et le ramène à l'entrepôt, 2) Marquez la commande comme "Livraison refusée", 3) Contactez le client pour comprendre le refus, 4) Proposez une rélivraison ou remboursement, 5) Mettez à jour le statut en conséquence.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">Comment générer un rapport d'activité?</div>
+                <div class="faq-answer">
+                    Dans le menu principal, allez à "Rapports" → "Activité logistique". Sélectionnez la plage de dates et les paramètres (livreur, zone, statut, etc.). Cliquez sur "Générer le rapport". Vous pouvez exporter en PDF ou CSV pour analyse ou partage.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">Comment tracker une livraison en temps réel?</div>
+                <div class="faq-answer">
+                    Pour une commande "In Delivery", cliquez sur "Voir la localisation" ou "Tracking GPS". Vous verrez la position du livreur en temps réel sur une carte. L'URL de suivi peut aussi être partagée avec le client pour qu'il suive la livraison.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">Quels sont mes horaires de travail assignés?</div>
+                <div class="faq-answer">
+                    Consultez votre profil en cliquant sur votre nom en haut à droite. Vous verrez vos horaires de travail assignés et votre zone de responsabilité. Signalez tout changement à votre responsable logistique.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">Comment signaler un problème avec une livraison?</div>
+                <div class="faq-answer">
+                    Si vous êtes livreur: ouvrez la livraison dans l'app et appuyez sur "Signaler un problème". Si vous êtes responsable logistique: ouvrez la commande et cliquez sur "Signaler un problème de livraison". Sélectionnez le type de problème et ajoutez des détails/photos. Cela créera un ticket d'escalade.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">Où puis-je voir mes statistiques de performance?</div>
+                <div class="faq-answer">
+                    Si vous êtes livreur: consultez votre profil pour voir votre taux de livraison, avis clients, et historique. Si vous êtes gestionnaire: allez dans "Livreurs" et cliquez sur un livreur pour voir ses statistiques détaillées. Plus le taux de réussite est élevé, meilleure est la qualité de service.
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function showSection(sectionId, event) {
+            event.preventDefault();
+
+            // Masquer toutes les sections
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Afficher la section sélectionnée
+            const selected = document.getElementById(sectionId);
+            if (selected) {
+                selected.classList.add('active');
+                window.scrollTo(0, 0);
+            }
+        }
+
+        function toggleFaq(element) {
+            element.classList.toggle('open');
+            element.nextElementSibling.classList.toggle('open');
+        }
+
+        // Afficher la première section au chargement
+        window.addEventListener('load', () => {
+            const firstSection = document.getElementById('home');
+            if (firstSection) {
+                firstSection.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>

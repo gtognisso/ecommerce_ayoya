@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide Administrateur - AYOYA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background: linear-gradient(135deg, #FF6B00 0%, #0066CC 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+
+        nav {
+            background: white;
+            border-bottom: 2px solid #FF6B00;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        nav li {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        nav a {
+            display: block;
+            padding: 15px 20px;
+            color: #1a1a1a;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #FF6B00;
+            border-bottom-color: #FF6B00;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        section {
+            background: white;
+            margin-bottom: 40px;
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        section.active {
+            display: block;
+        }
+
+        section h2 {
+            color: #FF6B00;
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #FF6B00;
+            padding-bottom: 10px;
+        }
+
+        section h3 {
+            color: #0066CC;
+            font-size: 1.4em;
+            margin: 30px 0 15px 0;
+        }
+
+        .step {
+            background: #f9f9f9;
+            border-left: 4px solid #FF6B00;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .step strong {
+            color: #FF6B00;
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: #FF6B00;
+            color: white;
+            text-align: center;
+            border-radius: 50%;
+            line-height: 30px;
+            margin-right: 10px;
+        }
+
+        .screenshot {
+            background: #e8e8e8;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            padding: 40px 20px;
+            text-align: center;
+            color: #666;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #0066CC;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #00AA55;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #FF9800;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table th, table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        table th {
+            background: #FF6B00;
+            color: white;
+            font-weight: 600;
+        }
+
+        table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        ul, ol {
+            margin: 15px 0 15px 30px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: #FF6B00;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 10px 0;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: #e55a00;
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            background: #0066CC;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 10px 5px 10px 0;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: #0052a3;
+        }
+
+        code {
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+        }
+
+        pre {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #e0e0e0;
+            padding: 15px 0;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            font-weight: 600;
+            color: #FF6B00;
+            cursor: pointer;
+            padding: 10px 0;
+            user-select: none;
+        }
+
+        .faq-question::before {
+            content: '▶ ';
+            color: #0066CC;
+        }
+
+        .faq-question.open::before {
+            content: '▼ ';
+        }
+
+        .faq-answer {
+            display: none;
+            padding: 10px 0 10px 20px;
+            color: #666;
+        }
+
+        .faq-answer.open {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+
+            nav li {
+                min-width: auto;
+            }
+
+            section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Guide Administrateur AYOYA</h1>
+        <p>Gestion complète de votre plateforme e-commerce</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#" onclick="showSection('home', event)">Accueil</a></li>
+            <li><a href="#" onclick="showSection('login', event)">Connexion</a></li>
+            <li><a href="#" onclick="showSection('dashboard', event)">Tableau de bord</a></li>
+            <li><a href="#" onclick="showSection('prices', event)">Prix</a></li>
+            <li><a href="#" onclick="showSection('media', event)">Médias</a></li>
+            <li><a href="#" onclick="showSection('contact', event)">Contact</a></li>
+            <li><a href="#" onclick="showSection('social', event)">Réseaux</a></li>
+            <li><a href="#" onclick="showSection('emails', event)">Emails</a></li>
+            <li><a href="#" onclick="showSection('smtp', event)">SMTP</a></li>
+            <li><a href="#" onclick="showSection('legal', event)">Légal</a></li>
+            <li><a href="#" onclick="showSection('faq', event)">FAQ</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <!-- ACCUEIL -->
+        <section id="home" class="active">
+            <h2>Bienvenue dans le guide administrateur AYOYA</h2>
+            <p>Ce guide complet vous aide à gérer votre plateforme e-commerce AYOYA. Vous y trouverez des instructions détaillées pour:</p>
+            <ul>
+                <li>Vous connecter à votre espace administrateur</li>
+                <li>Consulter les statistiques et métriques clés</li>
+                <li>Gérer les tarifs (bouteilles, livraison, cartons)</li>
+                <li>Mettre à jour les visuels et vidéos du site</li>
+                <li>Configurer les informations de contact</li>
+                <li>Gérer les réseaux sociaux</li>
+                <li>Configurer les notifications par email</li>
+                <li>Mettre à jour les documents légaux</li>
+            </ul>
+            <div class="info-box">
+                <strong>Conseil:</strong> Explorez chaque section de ce guide pour maîtriser complètement votre plateforme AYOYA.
+            </div>
+        </section>
+
+        <!-- CONNEXION -->
+        <section id="login">
+            <h2>Connexion à votre espace administrateur</h2>
+            <h3>Informations d'accès</h3>
+            <p>Pour accéder à votre espace administrateur, utilisez les identifiants suivants:</p>
+            <table>
+                <tr>
+                    <th>Élément</th>
+                    <th>Valeur</th>
+                </tr>
+                <tr>
+                    <td><strong>URL</strong></td>
+                    <td><code>https://votre-domaine.com/admin</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Nom d'utilisateur</strong></td>
+                    <td><code>admin</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Mot de passe</strong></td>
+                    <td>Votre mot de passe personnalisé</td>
+                </tr>
+            </table>
+
+            <h3>Étapes de connexion</h3>
+            <div class="step">
+                <strong>1</strong> Ouvrez votre navigateur et accédez à <code>https://votre-domaine.com/admin</code>
+            </div>
+            <div class="screenshot">📱 Capture écran: Formulaire de connexion AYOYA</div>
+
+            <div class="step">
+                <strong>2</strong> Entrez votre nom d'utilisateur <code>admin</code> dans le champ "Identifiant"
+            </div>
+            <div class="screenshot">📱 Capture écran: Champ identifiant</div>
+
+            <div class="step">
+                <strong>3</strong> Entrez votre mot de passe dans le champ "Mot de passe"
+            </div>
+            <div class="screenshot">📱 Capture écran: Champ mot de passe</div>
+
+            <div class="step">
+                <strong>4</strong> Cliquez sur le bouton "Se connecter"
+            </div>
+            <div class="screenshot">📱 Capture écran: Bouton de connexion</div>
+
+            <div class="success-box">
+                ✓ Vous êtes maintenant connecté à votre espace administrateur!
+            </div>
+
+            <div class="warning-box">
+                ⚠️ <strong>Sécurité:</strong> Ne partagez jamais vos identifiants. Changez régulièrement votre mot de passe.
+            </div>
+        </section>
+
+        <!-- TABLEAU DE BORD -->
+        <section id="dashboard">
+            <h2>Tableau de bord</h2>
+            <p>Le tableau de bord vous offre une vue d'ensemble des performances de votre plateforme en temps réel.</p>
+
+            <h3>Statistiques principales</h3>
+            <table>
+                <tr>
+                    <th>Statut</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><strong>Commandes du jour</strong></td>
+                    <td>Nombre de nouvelles commandes reçues aujourd'hui</td>
+                </tr>
+                <tr>
+                    <td><strong>Chiffre d'affaires</strong></td>
+                    <td>Revenu total généré (jour, mois, année)</td>
+                </tr>
+                <tr>
+                    <td><strong>Commandes en attente</strong></td>
+                    <td>Nombre de commandes en cours de traitement</td>
+                </tr>
+                <tr>
+                    <td><strong>Taux de conversion</strong></td>
+                    <td>Pourcentage de visiteurs ayant effectué un achat</td>
+                </tr>
+                <tr>
+                    <td><strong>Produits en stock</strong></td>
+                    <td>Nombre de références disponibles</td>
+                </tr>
+                <tr>
+                    <td><strong>Clients actifs</strong></td>
+                    <td>Nombre de clients avec au moins une commande</td>
+                </tr>
+            </table>
+
+            <div class="screenshot">📊 Graphique: Vue du tableau de bord avec statistiques</div>
+
+            <div class="info-box">
+                💡 Conseil: Consultez le tableau de bord chaque jour pour suivre l'évolution de votre activité.
+            </div>
+        </section>
+
+        <!-- GESTION DES PRIX -->
+        <section id="prices">
+            <h2>Gestion des prix</h2>
+            <p>Cette section vous permet de configurer tous les tarifs de votre plateforme AYOYA.</p>
+
+            <h3>Prix des bouteilles</h3>
+            <p>Configurez le prix unitaire de chaque bouteille selon son type et sa contenance.</p>
+            <div class="step">
+                <strong>1</strong> Dans le menu principal, cliquez sur "Configuration" → "Prix"
+            </div>
+            <div class="screenshot">📱 Capture écran: Menu Configuration</div>
+
+            <div class="step">
+                <strong>2</strong> Sélectionnez l'onglet "Prix des bouteilles"
+            </div>
+            <div class screenshot">📱 Capture écran: Onglet Prix des bouteilles</div>
+
+            <div class="step">
+                <strong>3</strong> Localisez le produit à modifier (ex: "Bouteille 75cl - Rosé")
+            </div>
+            <div class="step">
+                <strong>4</strong> Cliquez sur le bouton "Modifier" ou l'icône crayon
+            </div>
+            <div class="screenshot">📱 Capture écran: Bouton modifier prix</div>
+
+            <div class="step">
+                <strong>5</strong> Entrez le nouveau prix dans le champ dédié (format: XX.XX €)
+            </div>
+            <div class="step">
+                <strong>6</strong> Cliquez sur "Sauvegarder" pour confirmer
+            </div>
+            <div class="screenshot">📱 Capture écran: Formulaire de prix</div>
+
+            <div class="success-box">
+                ✓ Le prix a été mis à jour avec succès!
+            </div>
+
+            <h3>Prix de livraison</h3>
+            <p>Configurez les tarifs de livraison par zone géographique.</p>
+            <div class="step">
+                <strong>1</strong> Dans la section "Prix", sélectionnez l'onglet "Livraison"
+            </div>
+            <div class="step">
+                <strong>2</strong> Choisissez la zone ou région à modifier
+            </div>
+            <div class="step">
+                <strong>3</strong> Entrez le tarif de livraison (ex: Zone 1: 5.99€, Zone 2: 9.99€)
+            </div>
+            <div class="step">
+                <strong>4</strong> Cliquez sur "Sauvegarder"
+            </div>
+            <div class="screenshot">📱 Capture écran: Configuration livraison</div>
+
+            <h3>Prix des cartons</h3>
+            <p>Gérez le coût des cartons d'emballage selon leur taille.</p>
+            <div class="step">
+                <strong>1</strong> Sélectionnez l'onglet "Cartons" dans la section Prix
+            </div>
+            <div class="step">
+                <strong>2</strong> Choisissez la taille de carton (S, M, L, XL)
+            </div>
+            <div class="step">
+                <strong>3</strong> Modifiez le prix unitaire du carton
+            </div>
+            <div class="step">
+                <strong>4</strong> Sauvegardez vos modifications
+            </div>
+
+            <h3>Taille des cartons</h3>
+            <p>Définissez les dimensions et capacités des cartons d'emballage.</p>
+            <table>
+                <tr>
+                    <th>Taille</th>
+                    <th>Dimensions</th>
+                    <th>Nombre de bouteilles</th>
+                </tr>
+                <tr>
+                    <td>S</td>
+                    <td>20x15x20 cm</td>
+                    <td>1-2</td>
+                </tr>
+                <tr>
+                    <td>M</td>
+                    <td>30x20x25 cm</td>
+                    <td>3-6</td>
+                </tr>
+                <tr>
+                    <td>L</td>
+                    <td>40x30x30 cm</td>
+                    <td>7-12</td>
+                </tr>
+                <tr>
+                    <td>XL</td>
+                    <td>50x40x40 cm</td>
+                    <td>12+</td>
+                </tr>
+            </table>
+
+            <div class="info-box">
+                💡 Les tarifs de livraison peuvent être modifiés à tout moment. Annoncez les changements importants à vos clients.
+            </div>
+        </section>
+
+        <!-- GESTION MÉDIAS -->
+        <section id="media">
+            <h2>Gestion des médias</h2>
+            <p>Gérez tous les visuels et vidéos de votre plateforme AYOYA.</p>
+
+            <h3>Visuels et images</h3>
+            <p>Chaque type de visuel à une résolution et utilisation spécifique:</p>
+            <table>
+                <tr>
+                    <th>Type</th>
+                    <th>Résolution</th>
+                    <th>Emplacement</th>
+                    <th>Format</th>
+                </tr>
+                <tr>
+                    <td>Hero background</td>
+                    <td>1920x1080px</td>
+                    <td>Fond de la page d'accueil</td>
+                    <td>JPG, PNG</td>
+                </tr>
+                <tr>
+                    <td>Carte produit</td>
+                    <td>400x500px</td>
+                    <td>Catalogue produits</td>
+                    <td>JPG, PNG</td>
+                </tr>
+                <tr>
+                    <td>Banneau promos</td>
+                    <td>1200x300px</td>
+                    <td>Section promotions</td>
+                    <td>JPG, PNG</td>
+                </tr>
+                <tr>
+                    <td>Logo</td>
+                    <td>300x100px</td>
+                    <td>En-tête du site</td>
+                    <td>PNG (transparent)</td>
+                </tr>
+                <tr>
+                    <td>Galerie</td>
+                    <td>600x600px</td>
+                    <td>Détail produit</td>
+                    <td>JPG, PNG</td>
+                </tr>
+            </table>
+
+            <h4>Télécharger un nouveau visuel</h4>
+            <div class="step">
+                <strong>1</strong> Accédez à "Contenu" → "Médias" depuis le menu principal
+            </div>
+            <div class="step">
+                <strong>2</strong> Cliquez sur le bouton "+ Ajouter un média"
+            </div>
+            <div class="step">
+                <strong>3</strong> Sélectionnez le fichier image depuis votre ordinateur
+            </div>
+            <div class="step">
+                <strong>4</strong> Choisissez le type de média (Hero, Produit, Banneau, etc.)
+            </div>
+            <div class="step">
+                <strong>5</strong> Optionnel: Ajoutez une description ou titre
+            </div>
+            <div class="step">
+                <strong>6</strong> Cliquez sur "Télécharger et sauvegarder"
+            </div>
+            <div class="screenshot">📱 Capture écran: Formulaire téléchargement médias</div>
+
+            <h3>Vidéos</h3>
+            <p>Intégrez des vidéos pour enrichir votre présentation produits.</p>
+            <div class="info-box">
+                <strong>Formats acceptés:</strong> MP4, WebM, OGV
+                <br><strong>Taille maximale:</strong> 100 MB
+                <br><strong>Durée maximale:</strong> 5 minutes
+                <br><strong>Résolution recommandée:</strong> 1280x720px (720p)
+            </div>
+
+            <h4>Télécharger une vidéo</h4>
+            <div class="step">
+                <strong>1</strong> Dans "Médias", cliquez sur l'onglet "Vidéos"
+            </div>
+            <div class="step">
+                <strong>2</strong> Cliquez sur "+ Ajouter une vidéo"
+            </div>
+            <div class="step">
+                <strong>3</strong> Glissez-déposez votre fichier vidéo (ou cliquez pour parcourir)
+            </div>
+            <div class="step">
+                <strong>4</strong> Attendez la fin du téléchargement et du traitement
+            </div>
+            <div class="step">
+                <strong>5</strong> Ajoutez un titre et description
+            </div>
+            <div class="step">
+                <strong>6</strong> Cliquez sur "Publier"
+            </div>
+            <div class="screenshot">📱 Capture écran: Gestionnaire vidéos</div>
+
+            <h3>Favicon - Icône du site</h3>
+            <p>Le favicon est la petite icône affichée dans l'onglet navigateur.</p>
+
+            <h4>Changer le favicon</h4>
+            <div class="step">
+                <strong>1</strong> Accédez à "Configuration" → "Général"
+            </div>
+            <div class="step">
+                <strong>2</strong> Scroll jusqu'à la section "Favicon"
+            </div>
+            <div class="step">
+                <strong>3</strong> Cliquez sur "Parcourir" ou glissez-déposez une image
+            </div>
+            <div class="info-box">
+                Format recommandé: PNG 32x32px ou ICO
+            </div>
+            <div class="step">
+                <strong>4</strong> Cliquez sur "Sauvegarder"
+            </div>
+            <div class="success-box">
+                ✓ Le favicon a été mis à jour. Rechargez votre navigateur pour voir les changements.
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact">
+            <h2>Configuration des informations de contact</h2>
+            <p>Mettez à jour les informations de contact affichées sur votre site.</p>
+
+            <h3>Accéder à la configuration</h3>
+            <div class="step">
+                <strong>1</strong> Allez dans "Configuration" → "Contact"
+            </div>
+            <div class="screenshot">📱 Capture écran: Menu Configuration</div>
+
+            <h3>Téléphone</h3>
+            <div class="step">
+                <strong>1</strong> Localisez le champ "Numéro de téléphone"
+            </div>
+            <div class="step">
+                <strong>2</strong> Effacez l'ancien numéro
+            </div>
+            <div class="step">
+                <strong>3</strong> Entrez le nouveau numéro au format: <code>+33 X XX XX XX XX</code>
+            </div>
+            <div class="step">
+                <strong>4</strong> Cliquez sur "Sauvegarder"
+            </div>
+
+            <h3>Adresse email</h3>
+            <div class="step">
+                <strong>1</strong> Localisez le champ "Adresse email"
+            </div>
+            <div class="step">
+                <strong>2</strong> Entrez l'adresse email de contact: <code>contact@votre-domaine.com</code>
+            </div>
+            <div class="step">
+                <strong>3</strong> Cliquez sur "Sauvegarder"
+            </div>
+
+            <h3>Adresse physique</h3>
+            <div class="step">
+                <strong>1</strong> Complétez les champs d'adresse:
+                <ul>
+                    <li>Rue</li>
+                    <li>Code postal</li>
+                    <li>Ville</li>
+                    <li>Pays</li>
+                </ul>
+            </div>
+            <div class="step">
+                <strong>2</strong> Cliquez sur "Sauvegarder"
+            </div>
+
+            <div class="warning-box">
+                ⚠️ Vérifiez que les informations sont correctes avant de sauvegarder. Elles seront affichées publiquement sur votre site.
+            </div>
+        </section>
+
+        <!-- RÉSEAUX SOCIAUX -->
+        <section id="social">
+            <h2>Gestion des réseaux sociaux</h2>
+            <p>Liez vos comptes de réseaux sociaux à votre plateforme AYOYA.</p>
+
+            <h3>Accéder à la configuration</h3>
+            <div class="step">
+                <strong>1</strong> Allez dans "Configuration" → "Réseaux sociaux"
+            </div>
+
+            <h3>Facebook</h3>
+            <div class="step">
+                <strong>1</strong> Localisez le champ "Lien Facebook"
+            </div>
+            <div class="step">
+                <strong>2</strong> Collez votre URL Facebook: <code>https://facebook.com/votre-page</code>
+            </div>
+            <div class="screenshot">📱 Capture écran: Champ Facebook</div>
+            <div class="step">
+                <strong>3</strong> Cliquez sur "Sauvegarder"
+            </div>
+
+            <h3>Instagram</h3>
+            <div class="step">
+                <strong>1</strong> Localisez le champ "Lien Instagram"
+            </div>
+            <div class="step">
+                <strong>2</strong> Collez votre URL Instagram: <code>https://instagram.com/votre-compte</code>
+            </div>
+            <div class="step">
+                <strong>3</strong> Cliquez sur "Sauvegarder"
+            </div>
+
+            <h3>TikTok</h3>
+            <div class="step">
+                <strong>1</strong> Localisez le champ "Lien TikTok"
+            </div>
+            <div class="step">
+                <strong>2</strong> Collez votre URL TikTok: <code>https://tiktok.com/@votre-compte</code>
+            </div>
+            <div class="step">
+                <strong>3</strong> Cliquez sur "Sauvegarder"
+            </div>
+
+            <div class="info-box">
+                💡 Les icônes des réseaux sociaux apparaîtront automatiquement dans le pied de page de votre site.
+            </div>
+        </section>
+
+        <!-- EMAILS NOTIFICATION -->
+        <section id="emails">
+            <h2>Gestion des emails de notification</h2>
+            <p>Configurez les adresses email qui reçoivent les alertes de nouvelles commandes.</p>
+
+            <h3>Vue d'ensemble</h3>
+            <p>Chaque nouvelle commande génère des notifications automatiques. Configurez ici les destinataires.</p>
+
+            <h3>Ajouter une adresse email</h3>
+            <div class="step">
+                <strong>1</strong> Allez dans "Configuration" → "Notifications" → "Emails"
+            </div>
+            <div class="step">
+                <strong>2</strong> Cliquez sur le bouton "+ Ajouter une adresse email"
+            </div>
+            <div class="screenshot">📱 Capture écran: Bouton ajouter email</div>
+            <div class="step">
+                <strong>3</strong> Entrez l'adresse email: <code>email@exemple.com</code>
+            </div>
+            <div class="step">
+                <strong>4</strong> Sélectionnez les types de notifications à recevoir:
+                <ul>
+                    <li>✓ Nouvelle commande</li>
+                    <li>✓ Commande annulée</li>
+                    <li>✓ Paiement reçu</li>
+                    <li>✓ Livraison effectuée</li>
+                </ul>
+            </div>
+            <div class="step">
+                <strong>5</strong> Cliquez sur "Ajouter"
+            </div>
+            <div class="success-box">
+                ✓ L'adresse email a été ajoutée. Un email de confirmation sera envoyé.
+            </div>
+
+            <h3>Supprimer une adresse email</h3>
+            <div class="step">
+                <strong>1</strong> Localisez l'adresse email dans la liste
+            </div>
+            <div class="step">
+                <strong>2</strong> Cliquez sur le bouton "Supprimer" ou l'icône poubelle
+            </div>
+            <div class="step">
+                <strong>3</strong> Confirmez la suppression
+            </div>
+            <div class="warning-box">
+                ⚠️ Cette action est irréversible. Vérifiez que vous ne supprimez pas une adresse importante.
+            </div>
+        </section>
+
+        <!-- SMTP -->
+        <section id="smtp">
+            <h2>Configuration SMTP - Envoi d'emails</h2>
+            <p>Configurez le serveur SMTP pour l'envoi automatique d'emails (notifications, confirmations, etc.).</p>
+
+            <h3>Pourquoi configurer SMTP?</h3>
+            <p>SMTP (Simple Mail Transfer Protocol) permet à votre plateforme d'envoyer des emails:</p>
+            <ul>
+                <li>Confirmations de commande</li>
+                <li>Notifications aux administrateurs</li>
+                <li>Mises à jour de statut de livraison</li>
+                <li>Récupération de mot de passe</li>
+            </ul>
+
+            <h3>Accéder à la configuration SMTP</h3>
+            <div class="step">
+                <strong>1</strong> Allez dans "Configuration" → "Email" → "SMTP"
+            </div>
+            <div class="screenshot">📱 Capture écran: Configuration SMTP</div>
+
+            <h3>Paramètres à configurer</h3>
+            <table>
+                <tr>
+                    <th>Paramètre</th>
+                    <th>Exemple</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><strong>Serveur SMTP</strong></td>
+                    <td>smtp.gmail.com</td>
+                    <td>Adresse du serveur d'envoi</td>
+                </tr>
+                <tr>
+                    <td><strong>Port</strong></td>
+                    <td>587 (TLS) ou 465 (SSL)</td>
+                    <td>Port de connexion</td>
+                </tr>
+                <tr>
+                    <td><strong>Utilisateur</strong></td>
+                    <td>votre-email@gmail.com</td>
+                    <td>Votre identifiant email</td>
+                </tr>
+                <tr>
+                    <td><strong>Mot de passe</strong></td>
+                    <td>••••••••</td>
+                    <td>Votre mot de passe ou token</td>
+                </tr>
+                <tr>
+                    <td><strong>Email d'envoi</strong></td>
+                    <td>contact@votre-domaine.com</td>
+                    <td>L'adresse "De" des emails</td>
+                </tr>
+                <tr>
+                    <td><strong>Nom d'envoi</strong></td>
+                    <td>AYOYA</td>
+                    <td>Nom affiché dans l'email</td>
+                </tr>
+            </table>
+
+            <h3>Exemple: Gmail</h3>
+            <div class="info-box">
+                <strong>Serveur:</strong> smtp.gmail.com<br>
+                <strong>Port:</strong> 587 (TLS)<br>
+                <strong>Utilisateur:</strong> votre-email@gmail.com<br>
+                <strong>Mot de passe:</strong> Générez un "Mot de passe d'application" dans Gmail
+            </div>
+
+            <h3>Tester la configuration</h3>
+            <div class="step">
+                <strong>1</strong> Remplissez tous les paramètres SMTP
+            </div>
+            <div class="step">
+                <strong>2</strong> Cliquez sur le bouton "Tester la connexion"
+            </div>
+            <div class="step">
+                <strong>3</strong> Un email de test sera envoyé à votre adresse
+            </div>
+            <div class="step">
+                <strong>4</strong> Vérifiez que vous avez reçu l'email
+            </div>
+            <div class="success-box">
+                ✓ Si le test réussit, cliquez sur "Sauvegarder"
+            </div>
+
+            <div class="warning-box">
+                ⚠️ <strong>Sécurité:</strong> Utilisez un mot de passe ou token fort. Ne le partagez jamais.
+            </div>
+        </section>
+
+        <!-- DOCUMENTS LÉGAUX -->
+        <section id="legal">
+            <h2>Gestion des documents légaux</h2>
+            <p>Mettez à jour vos Conditions Générales d'Utilisation (CGU) et Conditions Générales de Vente (CGV).</p>
+
+            <h3>Accéder aux documents</h3>
+            <div class="step">
+                <strong>1</strong> Allez dans "Configuration" → "Légal"
+            </div>
+            <div class="screenshot">📱 Capture écran: Menu Légal</div>
+
+            <h3>Conditions Générales d'Utilisation (CGU)</h3>
+            <p>Les CGU définissent les règles d'utilisation de votre site web.</p>
+            <div class="step">
+                <strong>1</strong> Cliquez sur l'onglet "CGU"
+            </div>
+            <div class="step">
+                <strong>2</strong> Cliquez sur "Modifier" pour éditer le texte
+            </div>
+            <div class="screenshot">📱 Capture écran: Éditeur CGU</div>
+            <div class="step">
+                <strong>3</strong> Utilisez l'éditeur texte riche pour formater:
+                <ul>
+                    <li>Titres (H1, H2, H3)</li>
+                    <li>Gras, italique, souligné</li>
+                    <li>Listes à puces ou numérotées</li>
+                    <li>Liens hypertextes</li>
+                </ul>
+            </div>
+            <div class="step">
+                <strong>4</strong> Cliquez sur "Aperçu" pour voir le rendu final
+            </div>
+            <div class="step">
+                <strong>5</strong> Cliquez sur "Publier" pour appliquer les changements
+            </div>
+
+            <h3>Conditions Générales de Vente (CGV)</h3>
+            <p>Les CGV régissent les conditions d'achat et de vente sur votre plateforme.</p>
+            <div class="step">
+                <strong>1</strong> Cliquez sur l'onglet "CGV"
+            </div>
+            <div class="step">
+                <strong>2</strong> Suivez les mêmes étapes que pour les CGU
+            </div>
+            <div class="step">
+                <strong>3</strong> Incluez:
+                <ul>
+                    <li>Tarifs et modalités de paiement</li>
+                    <li>Conditions de livraison</li>
+                    <li>Politique de retour</li>
+                    <li>Droit de rétractation</li>
+                    <li>Garanties produits</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                ⚠️ <strong>Important légal:</strong> Ces documents sont obligatoires en France. Assurez-vous qu'ils sont complets et conformes à la législation.
+            </div>
+
+            <div class="info-box">
+                💡 Utilisez des modèles comme base et adaptez-les à votre activité. Consultez un juriste en cas de doute.
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section id="faq">
+            <h2>Questions Fréquemment Posées (FAQ)</h2>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">Où se trouvent les statistiques de mon site?</div>
+                <div class="faq-answer">
+                    Les statistiques principales sont visibles sur le tableau de bord. Vous verrez le nombre de commandes, le chiffre d'affaires, les clients actifs, etc. Vous pouvez aussi accéder à des rapports détaillés dans "Rapports" → "Analyses".
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">Combien de temps pour que mes changements de prix soient appliqués?</div>
+                <div class="faq-answer">
+                    Les changements de prix sont appliqués immédiatement après la sauvegarde. Les clients verront les nouveaux prix lors de leur prochaine visite ou rechargement de page.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">Quels formats de fichier acceptez-vous pour les images?</div>
+                <div class="faq-answer">
+                    Nous acceptons JPG, PNG, GIF et WebP. Pour les meilleures performances, utilisez JPG pour les photos et PNG pour les logos et visuels avec transparence. Compressez vos images pour réduire le temps de chargement.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">Comment recevoir des notifications de nouvelles commandes?</div>
+                <div class="faq-answer">
+                    Allez dans Configuration → Notifications → Emails et ajoutez votre adresse email. Vous recevrez automatiquement une notification chaque fois qu'une nouvelle commande est passée. Vous pouvez ajouter plusieurs adresses email.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">Je n'ai pas reçu l'email de notification. Que faire?</div>
+                <div class="faq-answer">
+                    1. Vérifiez que vous avez correctement configuré l'adresse email<br>
+                    2. Vérifiez le dossier "Spam" ou "Courrier indésirable"<br>
+                    3. Vérifiez la configuration SMTP (menu Configuration → Email → SMTP)<br>
+                    4. Testez la connexion SMTP en cliquant sur "Tester la connexion"<br>
+                    5. Vérifiez que le mot de passe SMTP est correct et à jour
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">Puis-je modifier le favicon du site?</div>
+                <div class="faq-answer">
+                    Oui! Allez dans Configuration → Général, scroll jusqu'à la section "Favicon" et téléchargez une nouvelle image. Format recommandé: PNG 32x32px. Après la mise à jour, videz le cache de votre navigateur pour voir le changement.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">Quel est le poids maximal d'une vidéo?</div>
+                <div class="faq-answer">
+                    La taille maximale est de 100 MB. Pour les meilleures performances, compressez vos vidéos à une résolution de 1280x720px (720p) avant de les télécharger. Utilisez des outils comme HandBrake ou ffmpeg pour la compression.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">Comment sauvegarder ma configuration?</div>
+                <div class="faq-answer">
+                    Tous les changements sont automatiquement sauvegardés lorsque vous cliquez sur "Sauvegarder" ou un bouton équivalent. Une notification de confirmation apparaît en haut de la page. Il n'est pas nécessaire de sauvegarder manuellement entre les modifications.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">Où puis-je trouver les rapports de ventes détaillés?</div>
+                <div class="faq-answer">
+                    Allez dans le menu principal "Rapports". Vous y trouverez plusieurs sections: Ventes (par période), Produits (les plus populaires), Clients (fidélité), Livraisons (statuts). Vous pouvez exporter ces rapports en CSV ou PDF.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">Puis-je modifier les conditions CGU/CGV après la publication?</div>
+                <div class="faq-answer">
+                    Oui, vous pouvez modifier les CGU et CGV à tout moment via Configuration → Légal. Les clients verront automatiquement la version mise à jour. Considérez une date d'entrée en vigueur si vous faites des changements importants.
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function showSection(sectionId, event) {
+            event.preventDefault();
+
+            // Masquer toutes les sections
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Afficher la section sélectionnée
+            const selected = document.getElementById(sectionId);
+            if (selected) {
+                selected.classList.add('active');
+                window.scrollTo(0, 0);
+            }
+        }
+
+        function toggleFaq(element) {
+            element.classList.toggle('open');
+            element.nextElementSibling.classList.toggle('open');
+        }
+
+        // Afficher la première section au chargement
+        window.addEventListener('load', () => {
+            const firstSection = document.getElementById('home');
+            if (firstSection) {
+                firstSection.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>

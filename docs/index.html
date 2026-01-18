@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation AYOYA</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: "Inter", -apple-system, sans-serif;
+            background: linear-gradient(135deg, #C9A227 0%, #8B7355 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container { max-width: 800px; width: 100%; }
+        .header { text-align: center; color: white; margin-bottom: 50px; }
+        .header h1 { font-size: 3em; margin-bottom: 10px; }
+        .header p { font-size: 1.2em; opacity: 0.95; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.3); }
+        .card h2 { font-size: 1.8em; margin-bottom: 15px; color: #3D2914; }
+        .card p { color: #666; margin-bottom: 20px; }
+        .card-icon { font-size: 3em; margin-bottom: 15px; }
+        .btn {
+            display: inline-block;
+            background: #C9A227;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } .header h1 { font-size: 2em; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>AYOYA</h1>
+            <p>Documentation E-Commerce</p>
+        </div>
+        <div class="grid">
+            <a href="/admin/" class="card">
+                <div class="card-icon">👨‍💼</div>
+                <h2>Guide Administrateur</h2>
+                <p>Gérez tarifs, médias, configuration, emails</p>
+                <span class="btn">Accéder</span>
+            </a>
+            <a href="/logistics/" class="card">
+                <div class="card-icon">🚚</div>
+                <h2>Guide Logistique</h2>
+                <p>Gérez commandes et livraisons</p>
+                <span class="btn">Accéder</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

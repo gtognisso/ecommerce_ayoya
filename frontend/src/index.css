@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-ayoya-cream text-ayoya-brown antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply backdrop-blur-lg bg-white/20 border border-white/30;
+  }
+
+  .glass-dark {
+    @apply backdrop-blur-lg bg-ayoya-brown/10 border border-ayoya-gold/20;
+  }
+
+  .btn-primary {
+    @apply bg-ayoya-gold hover:bg-ayoya-dark-gold text-white font-semibold px-8 py-3 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl;
+  }
+
+  .btn-secondary {
+    @apply glass hover:bg-white/30 text-ayoya-brown font-semibold px-8 py-3 rounded-lg transition-all duration-300;
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "ayoya-ecommerce-tests",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "playwright test",
+    "test:public": "playwright test tests/public/",
+    "test:admin": "playwright test tests/admin/",
+    "test:logistics": "playwright test tests/logistics/",
+    "test:api": "playwright test tests/api/",
+    "test:ui": "playwright test --ui",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "sharp": "^0.33.0"
+  }
+}

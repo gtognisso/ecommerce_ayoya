@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  docs:
+    build: .
+    container_name: ayoya-docs
+    ports:
+      - "8080:80"
+    volumes:
+      - ./admin:/usr/share/nginx/html/admin:ro
+      - ./logistics:/usr/share/nginx/html/logistics:ro
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Paris
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    networks:
+      - ayoya-network
+
+networks:
+  ayoya-network:
+    driver: bridge

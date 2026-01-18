@@ -1,0 +1,14 @@
+[
+  {
+    "id": "8163b8a6-0d8c-418e-b606-f19255047caa",
+    "username": "admin@ayoya.bj",
+    "password_hash": "a451a576132a472c3174e3773115d7eae21fff29e860fbaeb4ea74d51401da18",
+    "role": "admin"
+  },
+  {
+    "id": "2935b20f-7398-48c9-8015-3e7bf051af2c",
+    "username": "logistique@ayoya.bj",
+    "password_hash": "1a8ab717bc6e9b6c851a6ae75ca46e82172eaf39d12b4834c4bfa78c083c252b",
+    "role": "logistics"
+  }
+]
